@@ -1,6 +1,5 @@
 # Метод Ньютона для розв'язання систем нелінійних рівнянь
-
-from Math.Mkr1.helpingFunctions import *
+from helpingFunctions import *
 import numpy as np
 from scipy import linalg
 
@@ -28,7 +27,6 @@ def newton_2d(f_0, f_1, x_0, y_0, error_tolerance=1.0e-15, max_iterations=500):
         k = k + 1
 
         if np.max([np.abs(f_0(x, y)), np.abs(f_1(x, y))]) < error_tolerance:
-            print("root found within tolerance", error_tolerance, "using", k, "iterations")
             return [x, y]
 
         x_0 = x
@@ -36,7 +34,8 @@ def newton_2d(f_0, f_1, x_0, y_0, error_tolerance=1.0e-15, max_iterations=500):
 
         #print ([x,y])
 
-    raise RuntimeError("no root found within tolerance", error_tolerance, "using", max_iterations, "iterations")
+    print("no root found within tolerance ", error_tolerance, " using ", max_iterations, " iterations")
+    return None, None
 
 def newton_3d(f_0, f_1, f_2, x_0, y_0, z_0, error_tolerance=1.0e-15, max_iterations=500):
     k = 0
@@ -70,7 +69,6 @@ def newton_3d(f_0, f_1, f_2, x_0, y_0, z_0, error_tolerance=1.0e-15, max_iterati
         k = k + 1
 
         if np.max([np.abs(f_0(x, y, z)), np.abs(f_1(x, y, z)), np.abs(f_2(x, y, z))]) < error_tolerance:
-            print("root found within tolerance", error_tolerance, "using", k, "iterations")
             return [x, y, z]
 
         x_0 = x
@@ -79,5 +77,6 @@ def newton_3d(f_0, f_1, f_2, x_0, y_0, z_0, error_tolerance=1.0e-15, max_iterati
 
         #print ([x, y, z])
 
-    raise RuntimeError("no root found within tolerance", error_tolerance, "using", max_iterations, "iterations")
+    print("no root found within tolerance ", error_tolerance, " using ", max_iterations, " iterations")
+    return None, None
 

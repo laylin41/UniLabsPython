@@ -1,4 +1,4 @@
-# Метод простої ітерації для системи нелінійних рівнянь
+# Метод простої ітерації для розв'язання систем нелінійних рівнянь
 import numpy as np
 from scipy import linalg
 from helpingFunctions import *

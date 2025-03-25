@@ -1,22 +1,31 @@
+# Степеневий метод 
+from helpingFunctions import is_symmetric_positive
 import numpy as np
 from scipy import linalg
 
-# максимальне власне значення та вектор до нього
-def power_iteration(A, max_it):
-    n, n = A.shape
-    e_vec = np.random.rand(n)
-    for i in range(max_it):
-        e_vec_new = A @ e_vec
-        e_vec = e_vec_new / linalg.norm(e_vec_new)
-        #e_val = linalg.norm(A @ e_vec)
-        #print(f"{i}: {e_vec}, {e_val}")
+def stepin(A, x0, eps=1e-5, max_iter=150):
+    if (np.all(x0 == 0)):
+        print("Неправильний початковий вектор")
+        return None, None
+    else:
+        x = x0.copy()
+        alpha = 0
+        for i in range(max_iter):
+            x_next = A @ x
+            #alpha_next = x_next[0] / x[0] if x[0] != 0 else 0
+            alpha_next = linalg.norm(x_next, ord=np.inf) / linalg.norm(x, ord=np.inf)  # Краще наближення власного значення
+            x_next = x_next / linalg.norm(x_next, ord = 2)  # Нормалізація
 
-    e_val = linalg.norm(A @ e_vec)
-    #print (e_vec, e_val)
-    return e_vec, e_val
+            if abs(alpha_next - alpha) <= eps:
+                return x_next, alpha_next
+            
+            alpha = alpha_next
+            x = x_next
+        
+        print("Досягнуто максимальну кількість ітерацій")
+        return x_next, alpha_next
 
-# мінімальне власне значення та вектор до нього
-def power_iteration_min(A, max_it):
+def stepin_min(A):
     n,n = A.shape
     if (is_symmetric_positive(A)):
       #print("Метод через ||A||_∞:")
@@ -25,7 +34,7 @@ def power_iteration_min(A, max_it):
       B = norm_A * np.eye(n) - A
 
       #print("B:")
-      e_vec_B, e_val_B = power_iteration(B, max_it)
+      e_vec_B, e_val_B = stepin()
       e_val_A_min = norm_A - e_val_B
 
       #print(f"Мінімальне власне значення: {e_val_A_min}")
@@ -33,16 +42,3 @@ def power_iteration_min(A, max_it):
     else:
         print("Умова A = A.T > 0 не виконана")
         return None, None
-
-# умова для знаходження мінімального власного значення
-def is_symmetric_positive(A):
-    # Перевірка симетричності
-    if not np.allclose(A, A.T):
-        return False
-
-    # Перевірка позитивної визначеності (всі головні мінори > 0)
-    for i in range(1, A.shape[0] + 1):
-        if np.linalg.det(A[:i, :i]) <= 0:
-            return False
-
-    return True

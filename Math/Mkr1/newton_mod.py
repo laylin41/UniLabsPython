@@ -1,6 +1,6 @@
 # Модифікований метод Ньютона для розв'язання систем нелінійних рівнянь
 
-from Math.Mkr1.helpingFunctions import *
+from helpingFunctions import *
 import numpy as np
 from scipy import linalg
 
@@ -23,7 +23,6 @@ def newton_mod_2d(f_0, f_1, x_0, y_0, error_tolerance=1.0e-15, max_iterations=50
         k = k + 1
 
         if np.max([np.abs(f_0(x, y)), np.abs(f_1(x, y))]) < error_tolerance:
-            print("root found within tolerance", error_tolerance, "using", k, "iterations")
             return [x, y]
 
         x_0 = x
@@ -31,7 +30,8 @@ def newton_mod_2d(f_0, f_1, x_0, y_0, error_tolerance=1.0e-15, max_iterations=50
 
         #print ([x,y])
 
-    raise RuntimeError("no root found within tolerance", error_tolerance, "using", max_iterations, "iterations")
+    print("no root found within tolerance ", error_tolerance, " using ", max_iterations, " iterations")
+    return None, None
 
 def newton_mod_3d(f_0, f_1, f_2, x_0, y_0, z_0, error_tolerance=1.0e-15, max_iterations=500):
     J = np.zeros((3, 3))
@@ -60,7 +60,6 @@ def newton_mod_3d(f_0, f_1, f_2, x_0, y_0, z_0, error_tolerance=1.0e-15, max_ite
         k = k + 1
 
         if np.max([np.abs(f_0(x, y, z)), np.abs(f_1(x, y, z)), np.abs(f_2(x, y, z))]) < error_tolerance:
-            print("root found within tolerance", error_tolerance, "using", k, "iterations")
             return [x, y, z]
 
         x_0 = x
@@ -69,5 +68,6 @@ def newton_mod_3d(f_0, f_1, f_2, x_0, y_0, z_0, error_tolerance=1.0e-15, max_ite
 
         #print ([x, y, z])
 
-    raise RuntimeError("no root found within tolerance", error_tolerance, "using", max_iterations, "iterations")
+    print("no root found within tolerance ", error_tolerance, " using ", max_iterations, " iterations")
+    return None, None
 
