@@ -1,4 +1,6 @@
-from derivatives import *
+# Модифікований метод Ньютона для розв'язання систем нелінійних рівнянь
+
+from Math.Mkr1.helpingFunctions import *
 import numpy as np
 from scipy import linalg
 
