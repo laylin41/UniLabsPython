@@ -82,7 +82,7 @@ def main():
     e_vec, e_val = stepin.stepin(A, x0)
     try:
         np.testing.assert_almost_equal(np.float64(e_val), np.max(np.abs(linalg.eigvals(A))), decimal=5)
-        print("Скалярний метод:")
+        print("Степеневий метод:")
         print("Вектор: ", e_vec)
         print("Значення: ", e_val)
     except AssertionError:
@@ -91,6 +91,19 @@ def main():
     print("=" * 50)
 
     # метод якобі 
+    # Приклад використання
+    print("Метод якобі")
+    A = np.array([[2, -1, 0, 0],
+                [-1, 2, -1, 0],
+                [0, -1, 2, -1],
+                [0, 0, -1, 2]])
+    eigenvalues, eigenvectors = yakobi.jacobi_rotation(A, epsilon = 0.01)
+    print("Власні значення:")
+    print(eigenvalues)
+    print("Власні вектори:")
+    print(eigenvectors)
+
+    print("=" * 50)
 
 if __name__ == "__main__":
     main()
